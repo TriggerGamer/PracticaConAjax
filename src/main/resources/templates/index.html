@@ -1,0 +1,214 @@
+<!DOCKTYPE html>
+<html lang="es">
+
+	<head>
+		<title>Pagina Index</title>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/estilo.css}" >
+		<link th:href="@{/css/fontawesome/css/all.css}" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" disabled="" href="https://pro.fontawesome.com/releases/v6.0.0-beta2/css/all.css">
+		<title>Examen</title>
+		<meta name="author" content="Erick Jaquez">
+		<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/javascript_profesor.js}"></script>
+		<script type="text/javascript" th:src="@{/js/ajax.js}"></script>
+	
+	</head>
+
+	<body>
+		<!-- Inicio Navbar-->
+		<div id="navbar">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/index">Examen de Desarrollo entorno servidor.</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+						aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+	
+					<div class="collapse navbar-collapse" id="navbarColor01">
+						<ul class="navbar-nav me-auto">
+							<li class="nav-item">
+								<a class="nav-link toggle" id="menu" href="#menu_izq">Menu</a>
+							</li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/" role="button"
+									aria-haspopup="true" aria-expanded="false">Dropdown</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">Action</a>
+									<a class="dropdown-item" href="#">Another action</a>
+									<a class="dropdown-item" href="#">Something else here</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#">Separated link</a>
+								</div>
+							</li>
+							
+							<li> <h3 th:text="${session.user}"> </h3> </li>
+							
+							<li th:if="${nombre1 == nombre2}"> 
+								<a th:href="@{/cerrarSesion}" class="btn btn-secondary"> Cerrar Session </a>
+							</li>
+						</ul>
+						
+						<form action="/buscar" class="d-flex" method="POST">
+							<input class="form-control me-sm-2" type="text" placeholder="Busca tu producto" name="nombre">
+							<button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+						</form>
+					</div>
+				</div>
+			</nav>
+	
+		</div>
+		<!-- Cierre Navbar-->
+		
+		<!-- Apertura contenedor principal-->
+		<div id="selector" class="main_wrapper">
+			<!-- Apertura menu izquierdo-->
+			<aside id="menu_izq" class="toggle toggle-content">
+				<h2>Añadir Oferta</h2>
+	
+				<form action="/oferta" method="Post">
+					<div class="form-group">
+						<label class="col-form-label" for="inputNombre">Producto</label> <input type="text"
+							class="form-control" placeholder="Nombre del producto" id="inputNombre">
+					</div>
+	
+					<div class="form-group">
+						<label for="selectProducto">Selecciona Priodad</label>
+						<select class="form-select" id="selectPrioridad" size="3">
+							<option>Baja</option>
+							<option>Media</option>
+							<option>Alta</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label" for="inputGramos">Precio</label> <input type="number"
+							class="form-control" placeholder="Cuanto cuesta en €" id="inputPrecio" step="any">
+					</div>
+	
+					<div class="form-group">
+						<label class="form-label" for="inputEnlace">Hipevínculo</label> <input type="text" value="https://"
+							class="form-control" id="inputEnlace">
+					</div>
+					<div class="d-grid gap-2">
+	
+						<div class="form-group">
+							<label for="inputDescripcion">Descripción</label>
+							<textarea class="form-control" id="inputDescripcion" rows="3"></textarea>
+						</div>
+	
+						<div class="d-grid gap-2">
+							<button type="submit" class="btn btn-lg btn-primary" id="anadir">Añadir</button>
+						</div>
+					</div>
+				</form>
+			</aside>
+			<!-- Cierre menu izquierdo-->
+	
+			<!-- Apertura contenedor de la tabla-->
+			<section class="principal">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Id</th>
+							<th scope="col">Nombre</th>
+							<th scope="col">Precio</th>
+							<th scope="col">Info</th>
+							<th scope="col">Borrar</th>
+						</tr>
+					</thead>
+					<tbody id="tablita">
+					</tbody>
+				</table>
+				<div th:if="${nombre1 != nombre2}">
+					<div class="accordion" id="accordionExample">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingOne">
+								<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+									aria-expanded="true" aria-controls="collapseOne">
+									Introduce tu nombre</button>
+							</h2>
+							<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+								data-bs-parent="#accordionExample">
+								<div class="accordion-body">
+									<form action="/usuario" method="POST">
+										<div class="form-group">
+											<label class="col-form-label" for="inputDefault">Usuario </label> <input type="text"
+												class="form-control" placeholder="Escribe tu nombre" name="inputUsuario">
+										</div>
+										<br>
+										<button type="submit" class="btn btn-primary">Guardar</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+	
+		</section>
+		<!-- Cierre contenedor de la tabla-->
+	
+		<!-- Apertura menu izquierdo-->
+		<div id="selector" class="main_wrapper">
+	
+			<aside id="menu_dch" class="">
+	
+				<h2> Filtrar Ofertas</h2>
+	
+				<form action="/filtrar" method="POST">
+					<fieldset class="form-group">
+						<legend>Prioridad</legend>
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="optionsRadios" value="Baja" checked="">
+								Priodad baja
+							</label>
+						</div>
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="optionsRadios" value="Media">
+								Prioridad Media
+							</label>
+						</div>
+						<div class="form-check disabled">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="optionsRadios" value="Alta">
+								Prioridad Alta
+							</label>
+						</div>
+					</fieldset>
+					<button type="submit" class="btn btn-lg btn-primary">Filtrar por Prioridad</button>
+				</form>
+			</aside>
+		</div>
+		<!-- Cierre menu izquierdo-->
+	
+		<!-- Apertura Ventana modal-->
+		<div id="modal" class="modal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Modal title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>Modal body text goes here.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary">Save changes</button>
+						<button type="button" id="cerrar-modal" class="btn btn-secondary"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Cierre Ventana modal-->
+	
+	</body>
+
+</html>
