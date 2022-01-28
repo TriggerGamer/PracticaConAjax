@@ -6,7 +6,7 @@ import ErickJaquez.ofertasapp.entidades.Oferta;
 
 public interface OfertaServicio {
 	
-	public Oferta guardar_oferta(Oferta oferta);
+	public Oferta guardarOferta(Oferta oferta);
 	
 	public boolean borrarOfertaById(int id);
 	

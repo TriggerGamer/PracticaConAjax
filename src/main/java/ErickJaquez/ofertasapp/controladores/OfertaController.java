@@ -1,5 +1,6 @@
 package ErickJaquez.ofertasapp.controladores;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,12 @@ public class OfertaController {
 		float precio = Float.parseFloat(json.get("precio"));
 		oferta.setNombreOferta(json.get("nombre"));
 		oferta.setPrioridad(json.get("prioridad"));
+		oferta.setFecha_pub(LocalDateTime.now());
 		oferta.setEnlace(json.get("enlace"));
 		oferta.setDescripcion(json.get("descripcion"));
 		oferta.setPrecio(precio);
 		
-		ofertaservicio.guardar_oferta(oferta);
+		ofertaservicio.guardarOferta(oferta);
         
 		return new ResponseEntity<Object>(oferta, HttpStatus.OK);
 		

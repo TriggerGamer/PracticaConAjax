@@ -54,8 +54,8 @@
 						</ul>
 						
 						<form action="/buscar" class="d-flex" method="POST">
-							<input class="form-control me-sm-2" type="text" placeholder="Busca tu producto" name="nombre">
-							<button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+							<input class="form-control me-sm-2" type="text" placeholder="Busca tu producto" id="Buscarnombre">
+							<button class="btn btn-secondary my-2 my-sm-0" type="submit" id="buscar">Buscar</button>
 						</form>
 					</div>
 				</div>
@@ -163,24 +163,24 @@
 						<legend>Prioridad</legend>
 						<div class="form-check">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="optionsRadios" value="Baja" checked="">
+								<input type="radio" class="form-check-input" name="optionsRadios" value="Baja" id="PrioridadBaja">
 								Priodad baja
 							</label>
 						</div>
 						<div class="form-check">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="optionsRadios" value="Media">
+								<input type="radio" class="form-check-input" name="optionsRadios" value="Media" id="PrioridadMedia">
 								Prioridad Media
 							</label>
 						</div>
-						<div class="form-check disabled">
+						<div class="form-check">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="optionsRadios" value="Alta">
+								<input type="radio" class="form-check-input" name="optionsRadios" value="Alta" id="PrioridadAlta">
 								Prioridad Alta
 							</label>
 						</div>
 					</fieldset>
-					<button type="submit" class="btn btn-lg btn-primary">Filtrar por Prioridad</button>
+					<button type="submit" class="btn btn-lg btn-primary" id="filtrar">Filtrar por Prioridad</button>
 				</form>
 			</aside>
 		</div>

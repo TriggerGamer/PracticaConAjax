@@ -17,7 +17,7 @@ public class OfertaServiceImpl implements OfertaServicio {
 	private OfertaDao ofertadao;
 
 	@Override
-	public Oferta guardar_oferta(Oferta oferta) {
+	public Oferta guardarOferta(Oferta oferta) {
 		
 		if(oferta.getPrioridad().equals("Baja")){
 			oferta.setPrioridad("table-active");
@@ -44,16 +44,6 @@ public class OfertaServiceImpl implements OfertaServicio {
 
 	@Override
 	public List<Oferta> filtrarPorPrioridad(String prioridad) {
-		
-		if(prioridad.equals("Baja")){
-			prioridad = "table-active";
-		}
-		else if(prioridad.equals("Media")){
-			prioridad = "table-warning";
-		}
-		else if(prioridad.equals("Alta")){
-			prioridad = "table-danger";
-		}
 		
 		return ofertadao.filtrarPorPrioridad(prioridad);
 	}

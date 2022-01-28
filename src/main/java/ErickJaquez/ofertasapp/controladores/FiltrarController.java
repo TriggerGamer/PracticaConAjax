@@ -1,12 +1,12 @@
 package ErickJaquez.ofertasapp.controladores;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ErickJaquez.ofertasapp.entidades.Oferta;
@@ -17,20 +17,21 @@ public class FiltrarController {
 	@Autowired
 	private OfertaServicio ofertaservicio;
 	
-	@PostMapping("/filtrar")
-	public String filtrar_PorPrioridad(@RequestParam String optionsRadios, Model modelo) {
+	@ResponseBody
+	@PostMapping(value="filtrar")
+	public  List<Oferta> filtrarPorPrioridad(@RequestBody Map<String, String> json) {
 		
-		List<Oferta> ofertas = ofertaservicio.filtrarPorPrioridad(optionsRadios);
+		String prioridad = json.get("prioridad");
 		
-		modelo.addAttribute("ofertas", ofertas);
-		
-		return "index";
+		return ofertaservicio.filtrarPorPrioridad(prioridad);
 	}
 	
 	@ResponseBody
-	@PostMapping("/buscar")
-	public List<Oferta> obtenerOfertasPorNombre(@RequestParam String nombre) {
+	@PostMapping(value="buscar")
+	public List<Oferta> buscarPorNombre(@RequestBody Map<String, String> json) {
 		
+		String nombre = json.get("nombre");
+
 		return ofertaservicio.buscarPorNombre(nombre);
 	}
 
