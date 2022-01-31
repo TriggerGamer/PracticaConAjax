@@ -1,4 +1,4 @@
-package ErickJaquez.ofertasapp.entidades;
+package Examen.PracticaAjax.entidades;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

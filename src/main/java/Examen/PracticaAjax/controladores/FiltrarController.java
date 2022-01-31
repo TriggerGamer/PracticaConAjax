@@ -1,4 +1,4 @@
-package ErickJaquez.ofertasapp.controladores;
+package Examen.PracticaAjax.controladores;
 
 import java.util.List;
 import java.util.Map;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ErickJaquez.ofertasapp.entidades.Oferta;
-import ErickJaquez.ofertasapp.servicios.OfertaServicio;
+import Examen.PracticaAjax.entidades.Oferta;
+import Examen.PracticaAjax.servicios.OfertaServicio;
 
 @Controller
 public class FiltrarController {

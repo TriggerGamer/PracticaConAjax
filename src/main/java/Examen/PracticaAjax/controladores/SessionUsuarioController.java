@@ -1,4 +1,4 @@
-package ErickJaquez.ofertasapp.controladores;
+package Examen.PracticaAjax.controladores;
 
 import javax.servlet.http.HttpSession;
 

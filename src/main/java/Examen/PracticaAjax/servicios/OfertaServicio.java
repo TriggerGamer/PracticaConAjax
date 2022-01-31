@@ -1,8 +1,8 @@
-package ErickJaquez.ofertasapp.servicios;
+package Examen.PracticaAjax.servicios;
 
 import java.util.List;
 
-import ErickJaquez.ofertasapp.entidades.Oferta;
+import Examen.PracticaAjax.entidades.Oferta;
 
 public interface OfertaServicio {
 	

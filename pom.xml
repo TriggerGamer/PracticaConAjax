@@ -9,8 +9,8 @@
 		<version>2.6.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ErickJaquez</groupId>
-	<artifactId>ofertasapp</artifactId>
+	<groupId>Examen</groupId>
+	<artifactId>PracticaAjax</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ofertas</name>
 	<description>Demo project for Spring Boot</description>

@@ -1,4 +1,4 @@
-package ErickJaquez.ofertasapp.modelo;
+package Examen.PracticaAjax.modelo;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Map;

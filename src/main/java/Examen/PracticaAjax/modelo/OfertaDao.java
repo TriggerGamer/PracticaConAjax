@@ -1,8 +1,8 @@
-package ErickJaquez.ofertasapp.modelo;
+package Examen.PracticaAjax.modelo;
 
 import java.util.List;
 
-import ErickJaquez.ofertasapp.entidades.Oferta;
+import Examen.PracticaAjax.entidades.Oferta;
 
 public interface OfertaDao extends DaoGenerico<Oferta>{
 	

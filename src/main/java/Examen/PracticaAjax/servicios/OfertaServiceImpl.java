@@ -1,4 +1,4 @@
-package ErickJaquez.ofertasapp.servicios;
+package Examen.PracticaAjax.servicios;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ErickJaquez.ofertasapp.entidades.Oferta;
-import ErickJaquez.ofertasapp.modelo.OfertaDao;
+import Examen.PracticaAjax.entidades.Oferta;
+import Examen.PracticaAjax.modelo.OfertaDao;
 
 @Service
 @Transactional

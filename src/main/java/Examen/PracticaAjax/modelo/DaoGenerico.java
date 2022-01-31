@@ -1,4 +1,4 @@
-package ErickJaquez.ofertasapp.modelo;
+package Examen.PracticaAjax.modelo;
 
 public interface DaoGenerico<T> {
 		T crear(T t);

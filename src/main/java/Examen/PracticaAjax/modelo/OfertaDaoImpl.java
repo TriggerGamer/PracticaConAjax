@@ -1,4 +1,4 @@
-package ErickJaquez.ofertasapp.modelo;
+package Examen.PracticaAjax.modelo;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import ErickJaquez.ofertasapp.entidades.Oferta;
+import Examen.PracticaAjax.entidades.Oferta;
 
 @Repository
 @Component("OfertaDao")

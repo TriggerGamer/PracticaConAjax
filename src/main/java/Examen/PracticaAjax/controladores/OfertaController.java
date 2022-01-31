@@ -1,4 +1,4 @@
-package ErickJaquez.ofertasapp.controladores;
+package Examen.PracticaAjax.controladores;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ErickJaquez.ofertasapp.entidades.Oferta;
-import ErickJaquez.ofertasapp.servicios.OfertaServicio;
+import Examen.PracticaAjax.entidades.Oferta;
+import Examen.PracticaAjax.servicios.OfertaServicio;
 
 @Controller
 public class OfertaController {
