@@ -74,92 +74,6 @@ function obtenerOfertas() {
 		})
 }
 
-function borrarOfertas(id) {
-	let tablita = document.getElementById("tablita");
-	for (let item of tablita.childNodes) {
-		let cosa_borrar = item.childNodes;
-		let id_borrar = cosa_borrar[0].innerText;
-
-		if (id_borrar === id) {
-			var tr_borrar = item;
-		}
-	}
-
-	fetch('/borrar/' + id, { headers: { "Content-Type": "application/json; charset=utf-8" } })
-		.then(res => res.json())
-		.then(response => {
-			if (response) {
-				tablita.removeChild(tr_borrar);
-			}
-		})
-}
-
-function perfilOfertas(id) {
-
-	var mymodal = document.getElementById("modal");
-	$(mymodal).modal();
-
-	let tabla = document.getElementById("tablita-modal");
-
-	var cerrarmodal = document.getElementById("cerrar-modal");
-	cerrarmodal.addEventListener("click", function() {
-		tabla.replaceChildren();
-		$(mymodal).modal('hide');
-	})
-
-	fetch('/perfil/' + id, { headers: { "Content-Type": "application/json; charset=utf-8" } })
-		.then(res => res.json())
-		.then(response => {
-			
-			let tr = document.createElement('tr');
-
-			let th = document.createElement('th');
-			let td1 = document.createElement('td');
-			let td2 = document.createElement('td');
-			let td3 = document.createElement('td');
-			let td4 = document.createElement('td');
-			let td5 = document.createElement('td');
-			let td6 = document.createElement('td');
-			th.setAttribute("scope", "row");
-			th.textContent = response.id_Oferta;
-			td1.textContent = response.nombreOferta;
-			let text = response.fecha_pub;
-			const myArray = text.split("T");
-			td2.textContent = myArray[0];
-			td3.textContent = response.prioridad;
-			td4.textContent =  response.enlace;
-			td5.textContent = response.descripcion;
-			td6.textContent = response.precio + "€";
-
-			tabla.appendChild(tr);
-			tr.appendChild(th);
-			tr.appendChild(td1);
-			tr.appendChild(td2);
-			tr.appendChild(td3);
-			tr.appendChild(td4);
-			tr.appendChild(td5);
-			tr.appendChild(td6);
-		})
-}
-
-function anadirOfertas(event) {
-	event.preventDefault();
-
-	fetch('/oferta', {
-		headers: { "Content-Type": "application/json; charset=utf-8" }, method: 'POST',
-		body: JSON.stringify({ nombre: $('#inputNombre').val(), prioridad: $('#selectPrioridad').val(), enlace: $('#inputEnlace').val(), descripcion: $('#inputDescripcion').val(), precio: $('#inputPrecio').val() })
-	})
-		.then(function(response) {
-			if (response.ok) {
-				return response.json()
-			}
-		})
-		.then(response => {
-			obtenerOfertas();
-		})
-
-}
-
 function buscarOfertas(event) {
 	event.preventDefault();
 
@@ -349,10 +263,174 @@ function filtrarOfertas(event) {
 		})
 }
 
+function borrarOfertas(id) {
+	let tablita = document.getElementById("tablita");
+	for (let item of tablita.childNodes) {
+		let cosa_borrar = item.childNodes;
+		let id_borrar = cosa_borrar[0].innerText;
+
+		if (id_borrar === id) {
+			var tr_borrar = item;
+		}
+	}
+
+	fetch('/borrar/' + id, { headers: { "Content-Type": "application/json; charset=utf-8" } })
+		.then(res => res.json())
+		.then(response => {
+			if (response) {
+				tablita.removeChild(tr_borrar);
+			}
+		})
+}
+
+function perfilOfertas(id) {
+
+	var mymodal = document.getElementById("modal");
+	$(mymodal).modal();
+
+	let tabla = document.getElementById("tablita-modal");
+
+	var cerrarmodal = document.getElementById("cerrar-modal");
+	cerrarmodal.addEventListener("click", function() {
+		tabla.replaceChildren();
+		$(mymodal).modal('hide');
+	})
+
+	fetch('/perfil/' + id, { headers: { "Content-Type": "application/json; charset=utf-8" } })
+		.then(res => res.json())
+		.then(response => {
+			
+			let tr = document.createElement('tr');
+
+			let th = document.createElement('th');
+			let td1 = document.createElement('td');
+			let td2 = document.createElement('td');
+			let td3 = document.createElement('td');
+			let td4 = document.createElement('td');
+			let td5 = document.createElement('td');
+			let td6 = document.createElement('td');
+			th.setAttribute("scope", "row");
+			th.textContent = response.id_Oferta;
+			td1.textContent = response.nombreOferta;
+			let text = response.fecha_pub;
+			const myArray = text.split("T");
+			td2.textContent = myArray[0];
+			td3.textContent = response.prioridad;
+			td4.textContent =  response.enlace;
+			td5.textContent = response.descripcion;
+			td6.textContent = response.precio + "€";
+
+			tabla.appendChild(tr);
+			tr.appendChild(th);
+			tr.appendChild(td1);
+			tr.appendChild(td2);
+			tr.appendChild(td3);
+			tr.appendChild(td4);
+			tr.appendChild(td5);
+			tr.appendChild(td6);
+		})
+}
+
+function anadirOfertas(event) {
+	event.preventDefault();
+
+	fetch('/oferta', {
+		headers: { "Content-Type": "application/json; charset=utf-8" }, method: 'POST',
+		body: JSON.stringify({ nombre: $('#inputNombre').val(), prioridad: $('#selectPrioridad').val(), enlace: $('#inputEnlace').val(), descripcion: $('#inputDescripcion').val(), precio: $('#inputPrecio').val() })
+	})
+		.then(function(response) {
+			if (response.ok) {
+				return response.json()
+			}
+		})
+		.then(response => {
+			obtenerOfertas();
+		})
+
+}
+
+function editarOfertas() {
+	let tabla = document.getElementById("tablita-modal");
+	let tr = tabla.childNodes[1];
+	
+	var id;
+	id = tr.childNodes[0].innerText;
+
+
+	fetch('/perfil/' + id, { headers: { "Content-Type": "application/json; charset=utf-8" } })
+		.then(res => res.json())
+		.then(response => {
+			tabla.replaceChildren();
+			
+			let tr = document.createElement('tr');
+
+			let th = document.createElement('th');
+			let td1 = document.createElement('td');
+			let td2 = document.createElement('td');
+			let td3 = document.createElement('td');
+			let td4 = document.createElement('td');
+			let td5 = document.createElement('td');
+			let td6 = document.createElement('td');
+			
+			th.setAttribute("scope", "row");
+			th.textContent = response.id_Oferta;
+
+			let text = response.fecha_pub;
+			const myArray = text.split("T");
+			
+			let input1 = document.createElement('input');
+			input1.setAttribute("type", "text");
+			input1.setAttribute("id", "nombre");
+			input1.setAttribute("value", response.nombreOferta);
+
+			let input2 = document.createElement('input');
+			input2.setAttribute("type", "text");
+			input2.setAttribute("id", "fecha_pub");
+			input2.setAttribute("value", myArray[0]);
+
+			let input3 = document.createElement('input');
+			input3.setAttribute("type", "text");
+			input3.setAttribute("id", "prioridad");
+			input3.setAttribute("value", response.prioridad);
+
+			let input4 = document.createElement('input');
+			input4.setAttribute("type", "text");
+			input4.setAttribute("id", "enlace");
+			input4.setAttribute("value", response.enlace);
+
+			let input5 = document.createElement('textarea');
+			input5.setAttribute("rows", "3");
+			input5.setAttribute("id", "descripcion");
+			input5.setAttribute("value", response.descripcion);
+
+			let input6 = document.createElement('input');
+			input6.setAttribute("type", "number");
+			input6.setAttribute("id", "precio");
+			input6.setAttribute("step", "any");
+			input6.setAttribute("value", response.precio);			
+
+			tabla.appendChild(tr);
+			tr.appendChild(th);
+			tr.appendChild(td1);
+			td1.appendChild(input1);
+			tr.appendChild(td2);
+			td2.appendChild(input2);
+			tr.appendChild(td3);
+			td3.appendChild(input3);
+			tr.appendChild(td4);
+			td4.appendChild(input4);
+			tr.appendChild(td5);
+			td5.appendChild(input5);
+			tr.appendChild(td6);
+			td6.appendChild(input6);
+		})
+
+}
 
 document.addEventListener("DOMContentLoaded", function() {
 	obtenerOfertas();
 	$("#anadir").click(anadirOfertas);
 	$("#buscar").click(buscarOfertas);
 	$("#filtrar").click(filtrarOfertas);
+	$("#editarOferta").click(editarOfertas);
 });
