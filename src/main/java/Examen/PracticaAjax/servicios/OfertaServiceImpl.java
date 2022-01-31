@@ -19,16 +19,6 @@ public class OfertaServiceImpl implements OfertaServicio {
 	@Override
 	public Oferta guardarOferta(Oferta oferta) {
 		
-		if(oferta.getPrioridad().equals("Baja")){
-			oferta.setPrioridad("table-active");
-		}
-		else if(oferta.getPrioridad().equals("Media")){
-			oferta.setPrioridad("table-warning");
-		}
-		else if(oferta.getPrioridad().equals("Alta")){
-			oferta.setPrioridad("table-danger");
-		}
-		
 		return ofertadao.crear(oferta);
 	}
 
@@ -57,16 +47,6 @@ public class OfertaServiceImpl implements OfertaServicio {
 	public Oferta findOfertaById(int id) {
 		
 		Oferta oferta = ofertadao.findOfertaById(id);
-		
-		if(oferta.getPrioridad().equals("table-active")){
-			oferta.setPrioridad("Baja");
-		}
-		else if(oferta.getPrioridad().equals("table-warning")){
-			oferta.setPrioridad("Media");
-		}
-		else if(oferta.getPrioridad().equals("table-danger")){
-			oferta.setPrioridad("Alta");
-		}
 		
 		return oferta;
 	}

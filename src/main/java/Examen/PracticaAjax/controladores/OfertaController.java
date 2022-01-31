@@ -27,15 +27,22 @@ public class OfertaController {
 	@PostMapping(value ="oferta")
 	public ResponseEntity<Object> crearOferta(@RequestBody Map<String, String> json) {
 		
-		Oferta oferta = new Oferta();	
+		Oferta oferta = new Oferta();
 		
-		float precio = Float.parseFloat(json.get("precio"));
+		String precio = json.get("precio");
+		
+		if(precio == null || precio == "") {
+			precio = "0";
+		}
+		
+		
+		float pr = Float.parseFloat(precio);
 		oferta.setNombreOferta(json.get("nombre"));
 		oferta.setPrioridad(json.get("prioridad"));
 		oferta.setFecha_pub(LocalDateTime.now());
 		oferta.setEnlace(json.get("enlace"));
 		oferta.setDescripcion(json.get("descripcion"));
-		oferta.setPrecio(precio);
+		oferta.setPrecio(pr);
 		
 		ofertaservicio.guardarOferta(oferta);
         
@@ -55,14 +62,10 @@ public class OfertaController {
 		}
 	}
 	
+	@ResponseBody
 	@GetMapping("/perfil/{id_Oferta}")
-	public String ver_oferta(@PathVariable int id_Oferta, Model modelo) {
+	public Oferta ver_oferta(@PathVariable int id_Oferta) {
 		
-		//Obtener la oferta concreta de la base de datos y añadirla con el modelo
-		Oferta oferta = ofertaservicio.findOfertaById(id_Oferta);
-		
-		modelo.addAttribute("oferta", oferta);
-		
-		return "perfil";
+		return ofertaservicio.findOfertaById(id_Oferta);
 	}
 }
