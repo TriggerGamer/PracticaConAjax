@@ -351,7 +351,7 @@ function anadirOfertas(event) {
 
 function editarOfertas() {
 	let tabla = document.getElementById("tablita-modal");
-	let tr = tabla.childNodes[1];
+	let tr = tabla.firstElementChild;
 	
 	var id;
 	id = tr.childNodes[0].innerText;
@@ -423,6 +423,7 @@ function editarOfertas() {
 			td5.appendChild(input5);
 			tr.appendChild(td6);
 			td6.appendChild(input6);
+			tr.appendChild();
 		})
 
 }

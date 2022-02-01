@@ -51,4 +51,18 @@ public class OfertaServiceImpl implements OfertaServicio {
 		return oferta;
 	}
 
+	@Override
+	public Oferta actualizarOferta(Oferta oferta) {
+		Oferta ofertaActualizada = ofertadao.findOfertaById(oferta.getId_Oferta());
+		
+		ofertaActualizada.setNombreOferta(oferta.getNombreOferta());
+		ofertaActualizada.setFecha_pub(oferta.getFecha_pub());
+		ofertaActualizada.setPrioridad(oferta.getPrioridad());
+		ofertaActualizada.setEnlace(oferta.getEnlace());
+		ofertaActualizada.setDescripcion(oferta.getDescripcion());
+		ofertaActualizada.setPrecio(oferta.getPrecio());
+		
+		return ofertaActualizada;
+	}
+
 }

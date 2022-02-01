@@ -51,6 +51,38 @@ public class OfertaController {
 	}
 	
 	@ResponseBody
+	@PostMapping(value ="actualizarOferta")
+	public ResponseEntity<Object> actualizarOferta(@RequestBody Map<String, String> json) {
+		
+		Oferta oferta = new Oferta();
+		
+		String precio = json.get("precio");
+		String fecha = json.get("fecha_pub");
+		
+		if(precio == null || precio == "") {
+			precio = "0";
+		}
+		
+		if(fecha == null || fecha == "") {
+			fecha = LocalDateTime.now().toString();
+		}
+		
+		LocalDateTime fecha_pub = LocalDateTime.parse(fecha);
+		float pr = Float.parseFloat(precio);
+		oferta.setNombreOferta(json.get("nombre"));
+		oferta.setPrioridad(json.get("prioridad"));
+		oferta.setFecha_pub(fecha_pub);
+		oferta.setEnlace(json.get("enlace"));
+		oferta.setDescripcion(json.get("descripcion"));
+		oferta.setPrecio(pr);
+		
+		Oferta oferta2 = ofertaservicio.actualizarOferta(oferta);
+        
+		return new ResponseEntity<Object>(oferta2, HttpStatus.OK);
+		
+	}
+	
+	@ResponseBody
 	@GetMapping("/borrar/{id_Oferta}")
 	public String borrar_oferta(@PathVariable int id_Oferta) {
 		

@@ -8,6 +8,8 @@ public interface OfertaServicio {
 	
 	public Oferta guardarOferta(Oferta oferta);
 	
+	public Oferta actualizarOferta(Oferta oferta);
+	
 	public boolean borrarOfertaById(int id);
 	
 	public List<Oferta> obtenerOfertas();
