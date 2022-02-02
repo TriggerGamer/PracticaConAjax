@@ -24,13 +24,13 @@ function obtenerOfertas() {
 				let td2 = document.createElement('td');
 				let td3 = document.createElement('td');
 				let td4 = document.createElement('td');
-				let button1 = document.createElement('a');
+				let button1 = document.createElement('button');
 				var linkText1 = document.createTextNode("Perfil");
 				button1.setAttribute("type", "button");
 				button1.classList.add("btn", "btn-outline-info");
 				button1.setAttribute("name", "perfil");
 				button1.appendChild(linkText1);
-				let button2 = document.createElement('a');
+				let button2 = document.createElement('button');
 				var linkText2 = document.createTextNode("Borrar");
 				button2.setAttribute("type", "button");
 				button2.classList.add("btn", "btn-outline-danger");
@@ -56,18 +56,18 @@ function obtenerOfertas() {
 				elementos.addEventListener("click", function() {
 					var tr = elementos.closest("tr");
 					id = tr.childNodes[0].innerText;
-
 					borrarOfertas(id);
 				});
 			}
 
 			var perfil = document.getElementsByName("perfil");
+			let tabla = document.getElementById("tablita-modal");
 			var id_perfil;
 			for (let elementos of perfil) {
 				elementos.addEventListener("click", function() {
 					var tr = elementos.closest("tr");
 					id_perfil = tr.childNodes[0].innerText;
-
+					tabla.replaceChildren();
 					perfilOfertas(id_perfil);
 				});
 			}
@@ -110,13 +110,13 @@ function buscarOfertas(event) {
 				let td2 = document.createElement('td');
 				let td3 = document.createElement('td');
 				let td4 = document.createElement('td');
-				let button1 = document.createElement('a');
+				let button1 = document.createElement('button');
 				var linkText1 = document.createTextNode("Perfil");
 				button1.setAttribute("type", "button");
 				button1.classList.add("btn", "btn-outline-info");
 				button1.setAttribute("name", "perfil");
 				button1.appendChild(linkText1);
-				let button2 = document.createElement('a');
+				let button2 = document.createElement('button');
 				var linkText2 = document.createTextNode("Borrar");
 				button2.setAttribute("type", "button");
 				button2.classList.add("btn", "btn-outline-danger");
@@ -142,19 +142,19 @@ function buscarOfertas(event) {
 				elementos.addEventListener("click", function() {
 					var tr = elementos.closest("tr");
 					id = tr.childNodes[0].innerText;
-
 					borrarOfertas(id_perfil);
 				});
 			}
 
 			var perfil = document.getElementsByName("perfil");
+			let tabla = document.getElementById("tablita-modal");
 			var id_perfil;
 			for (let elementos of perfil) {
 				elementos.addEventListener("click", function() {
 					var tr = elementos.closest("tr");
 					id_perfil = tr.childNodes[0].innerText;
-
-					perfilOfertas(id);
+					tabla.replaceChildren();
+					perfilOfertas(id_perfil);
 				});
 			}
 		})
@@ -213,13 +213,13 @@ function filtrarOfertas(event) {
 				let td2 = document.createElement('td');
 				let td3 = document.createElement('td');
 				let td4 = document.createElement('td');
-				let button1 = document.createElement('a');
+				let button1 = document.createElement('button');
 				var linkText1 = document.createTextNode("Perfil");
 				button1.setAttribute("type", "button");
 				button1.classList.add("btn", "btn-outline-info");
 				button1.setAttribute("name", "perfil");
 				button1.appendChild(linkText1);
-				let button2 = document.createElement('a');
+				let button2 = document.createElement('button');
 				var linkText2 = document.createTextNode("Borrar");
 				button2.setAttribute("type", "button");
 				button2.classList.add("btn", "btn-outline-danger");
@@ -245,18 +245,18 @@ function filtrarOfertas(event) {
 				elementos.addEventListener("click", function() {
 					var tr = elementos.closest("tr");
 					id = tr.childNodes[0].innerText;
-
 					borrarOfertas(id);
 				});
 			}
 
 			var perfil = document.getElementsByName("perfil");
+			let tabla = document.getElementById("tablita-modal");
 			var id_perfil;
 			for (let elementos of perfil) {
 				elementos.addEventListener("click", function() {
 					var tr = elementos.closest("tr");
 					id_perfil = tr.childNodes[0].innerText;
-
+					tabla.replaceChildren();
 					perfilOfertas(id_perfil);
 				});
 			}
@@ -283,16 +283,40 @@ function borrarOfertas(id) {
 		})
 }
 
-function perfilOfertas(id) {
+function anadirOfertas(event) {
+	event.preventDefault();
 
+	fetch('/oferta', {
+		headers: { "Content-Type": "application/json; charset=utf-8" }, method: 'POST',
+		body: JSON.stringify({ nombre: $('#inputNombre').val(), prioridad: $('#selectPrioridad').val(), enlace: $('#inputEnlace').val(), descripcion: $('#inputDescripcion').val(), precio: $('#inputPrecio').val() })
+	})
+		.then(function(response) {
+			if (response.ok) {
+				return response.json()
+			}
+		})
+		.then(response => {
+			obtenerOfertas();
+		})
+
+}
+
+function perfilOfertas(id) {
+	
 	var mymodal = document.getElementById("modal");
+	
 	$(mymodal).modal();
 
 	let tabla = document.getElementById("tablita-modal");
-
+	let bodymodal = document.getElementById("modal_body");
+	
 	var cerrarmodal = document.getElementById("cerrar-modal");
 	cerrarmodal.addEventListener("click", function() {
+		let boton = document.getElementById("actualizarOferta");
 		tabla.replaceChildren();
+		if (boton != null){
+			bodymodal.removeChild(boton);
+		}
 		$(mymodal).modal('hide');
 	})
 
@@ -331,46 +355,41 @@ function perfilOfertas(id) {
 		})
 }
 
-function anadirOfertas(event) {
-	event.preventDefault();
-
-	fetch('/oferta', {
-		headers: { "Content-Type": "application/json; charset=utf-8" }, method: 'POST',
-		body: JSON.stringify({ nombre: $('#inputNombre').val(), prioridad: $('#selectPrioridad').val(), enlace: $('#inputEnlace').val(), descripcion: $('#inputDescripcion').val(), precio: $('#inputPrecio').val() })
-	})
-		.then(function(response) {
-			if (response.ok) {
-				return response.json()
-			}
-		})
-		.then(response => {
-			obtenerOfertas();
-		})
-
-}
-
 function editarOfertas() {
+	
 	let tabla = document.getElementById("tablita-modal");
+	let bodymodal = document.getElementById("modal_body");
+	let boton = document.getElementById("actualizarOferta");
 	let tr = tabla.firstElementChild;
+	
+	if(boton != null){
+		bodymodal.removeChild(boton);
+	}
 	
 	var id;
 	id = tr.childNodes[0].innerText;
 
-
 	fetch('/perfil/' + id, { headers: { "Content-Type": "application/json; charset=utf-8" } })
 		.then(res => res.json())
 		.then(response => {
+				
 			tabla.replaceChildren();
 			
+			//Añadir a la tabla todos los inputs para volverla un form y poder editar la oferta
 			let tr = document.createElement('tr');
-
 			let th = document.createElement('th');
 			let td1 = document.createElement('td');
+			td1.setAttribute("class", "form-group");
 			let td2 = document.createElement('td');
+			td2.setAttribute("class", "form-group");
 			let td3 = document.createElement('td');
+			td3.setAttribute("class", "form-group");
 			let td4 = document.createElement('td');
+			td4.setAttribute("class", "form-group");
 			let td5 = document.createElement('td');
+			td5.setAttribute("class", "form-group");
 			let td6 = document.createElement('td');
+			td6.setAttribute("class", "form-group");
 			
 			th.setAttribute("scope", "row");
 			th.textContent = response.id_Oferta;
@@ -381,34 +400,47 @@ function editarOfertas() {
 			let input1 = document.createElement('input');
 			input1.setAttribute("type", "text");
 			input1.setAttribute("id", "nombre");
+			input1.setAttribute("class", "form-control col-xs-1");
 			input1.setAttribute("value", response.nombreOferta);
 
 			let input2 = document.createElement('input');
 			input2.setAttribute("type", "text");
 			input2.setAttribute("id", "fecha_pub");
+			input2.setAttribute("class", "form-control col-xs-1");
 			input2.setAttribute("value", myArray[0]);
 
-			let input3 = document.createElement('input');
-			input3.setAttribute("type", "text");
+			let input3 = document.createElement('select');
+			input3.setAttribute("size", "3");
 			input3.setAttribute("id", "prioridad");
-			input3.setAttribute("value", response.prioridad);
+			input3.setAttribute("class", "form-control col-xs-2");
+
+			let option1 = document.createElement('option');
+			option1.textContent = "Baja";
+			let option2 = document.createElement('option');
+			option2.textContent = "Media";
+			let option3 = document.createElement('option');
+			option3.textContent = "Alta";
 
 			let input4 = document.createElement('input');
 			input4.setAttribute("type", "text");
 			input4.setAttribute("id", "enlace");
+			input4.setAttribute("class", "form-control col-xs-1");
 			input4.setAttribute("value", response.enlace);
 
 			let input5 = document.createElement('textarea');
-			input5.setAttribute("rows", "3");
+			input5.setAttribute("rows", "5");
 			input5.setAttribute("id", "descripcion");
-			input5.setAttribute("value", response.descripcion);
+			input5.setAttribute("class", "form-control col-xs-1");
+			input5.textContent = response.descripcion;
 
 			let input6 = document.createElement('input');
 			input6.setAttribute("type", "number");
 			input6.setAttribute("id", "precio");
+			input6.setAttribute("class", "form-control col-xs-1");
 			input6.setAttribute("step", "any");
-			input6.setAttribute("value", response.precio);			
-
+			input6.setAttribute("value", response.precio);
+			
+			
 			tabla.appendChild(tr);
 			tr.appendChild(th);
 			tr.appendChild(td1);
@@ -417,13 +449,23 @@ function editarOfertas() {
 			td2.appendChild(input2);
 			tr.appendChild(td3);
 			td3.appendChild(input3);
+			input3.appendChild(option1);
+			input3.appendChild(option2);
+			input3.appendChild(option3);
 			tr.appendChild(td4);
 			td4.appendChild(input4);
 			tr.appendChild(td5);
 			td5.appendChild(input5);
 			tr.appendChild(td6);
 			td6.appendChild(input6);
-			tr.appendChild();
+		
+			// Añadir boton añadir ofertas al modal
+			let boton = document.createElement('button');
+			boton.setAttribute("id", "actualizarOferta");
+			boton.textContent = "Actualizar Oferta";
+			boton.setAttribute("class", "btn btn-outline-info btn-lg")
+
+			bodymodal.appendChild(boton);
 		})
 
 }
