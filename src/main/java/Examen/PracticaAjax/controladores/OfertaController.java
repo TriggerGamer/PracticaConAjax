@@ -67,12 +67,6 @@ public class OfertaController {
 			precio = "0";
 		}
 		
-		if(fecha == null || fecha == "") {
-			String f = LocalDateTime.now().toString();
-			String nuevo[] = f.split("T");
-			fecha = nuevo[0];
-		}
-		
 		int id = Integer.parseInt(id_oferta);
 		float pr = Float.parseFloat(precio);
 		
