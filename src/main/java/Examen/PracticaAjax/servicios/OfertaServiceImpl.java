@@ -1,5 +1,6 @@
 package Examen.PracticaAjax.servicios;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,18 @@ public class OfertaServiceImpl implements OfertaServicio {
 		Oferta ofertaActualizada = ofertadao.findOfertaById(oferta.getId_Oferta());
 		
 		ofertaActualizada.setNombreOferta(oferta.getNombreOferta());
+		
+		if(oferta.getFecha_pub() == null || oferta.getFecha_pub() == "") {
+			String f = LocalDateTime.now().toString();
+			String nuevo[] = f.split("T");
+			oferta.setFecha_pub(nuevo[0]) ;
+		}
 		ofertaActualizada.setFecha_pub(oferta.getFecha_pub());
+		
+		if(oferta.getPrioridad() == null || oferta.getPrioridad() == "") {
+			String p = "Baja";
+			oferta.setPrioridad(p);
+		}
 		ofertaActualizada.setPrioridad(oferta.getPrioridad());
 		ofertaActualizada.setEnlace(oferta.getEnlace());
 		ofertaActualizada.setDescripcion(oferta.getDescripcion());

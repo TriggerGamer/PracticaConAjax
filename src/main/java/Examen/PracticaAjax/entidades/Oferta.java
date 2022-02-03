@@ -1,7 +1,6 @@
 package Examen.PracticaAjax.entidades;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +24,7 @@ public class Oferta implements Serializable{
 	private String nombreOferta;
 	
 	@Column(name = "fecha_pub")
-	private LocalDateTime fecha_pub;
+	private String fecha_pub;
 	
 	@Column(name = "prioridad")
 	private String prioridad;
@@ -41,7 +40,7 @@ public class Oferta implements Serializable{
 	
 	public Oferta() {}
 	
-	public Oferta(int id_Oferta, String nombreOferta, LocalDateTime fecha_pub, String prioridad, String enlace, String descripcion, float precio) {
+	public Oferta(int id_Oferta, String nombreOferta, String fecha_pub, String prioridad, String enlace, String descripcion, float precio) {
 		this.id_Oferta = id_Oferta;
 		this.nombreOferta = nombreOferta;
 		this.fecha_pub = fecha_pub;
@@ -63,10 +62,10 @@ public class Oferta implements Serializable{
 	public void setNombreOferta(String nombreOferta) {
 		this.nombreOferta = nombreOferta;
 	}
-	public LocalDateTime getFecha_pub() {
+	public String getFecha_pub() {
 		return fecha_pub;
 	}
-	public void setFecha_pub(LocalDateTime fecha_pub) {
+	public void setFecha_pub(String fecha_pub) {
 		this.fecha_pub = fecha_pub;
 	}
 	public String getPrioridad() {

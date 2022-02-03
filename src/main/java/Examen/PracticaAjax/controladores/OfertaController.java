@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,11 +34,14 @@ public class OfertaController {
 			precio = "0";
 		}
 		
+		String f = LocalDateTime.now().toString();
+		String nuevo[] = f.split("T");
+		String fecha = nuevo[0];
 		
 		float pr = Float.parseFloat(precio);
 		oferta.setNombreOferta(json.get("nombre"));
 		oferta.setPrioridad(json.get("prioridad"));
-		oferta.setFecha_pub(LocalDateTime.now());
+		oferta.setFecha_pub(fecha);
 		oferta.setEnlace(json.get("enlace"));
 		oferta.setDescripcion(json.get("descripcion"));
 		oferta.setPrecio(pr);
@@ -58,20 +60,26 @@ public class OfertaController {
 		
 		String precio = json.get("precio");
 		String fecha = json.get("fecha_pub");
+		String id_oferta = json.get("id_Oferta");
+		
 		
 		if(precio == null || precio == "") {
 			precio = "0";
 		}
 		
 		if(fecha == null || fecha == "") {
-			fecha = LocalDateTime.now().toString();
+			String f = LocalDateTime.now().toString();
+			String nuevo[] = f.split("T");
+			fecha = nuevo[0];
 		}
 		
-		LocalDateTime fecha_pub = LocalDateTime.parse(fecha);
+		int id = Integer.parseInt(id_oferta);
 		float pr = Float.parseFloat(precio);
+		
+		oferta.setId_Oferta(id);
 		oferta.setNombreOferta(json.get("nombre"));
 		oferta.setPrioridad(json.get("prioridad"));
-		oferta.setFecha_pub(fecha_pub);
+		oferta.setFecha_pub(fecha);
 		oferta.setEnlace(json.get("enlace"));
 		oferta.setDescripcion(json.get("descripcion"));
 		oferta.setPrecio(pr);

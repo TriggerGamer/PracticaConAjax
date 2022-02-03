@@ -3,10 +3,10 @@ use Examen;
 
 CREATE TABLE Oferta(
 id_Oferta int(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-nombreOferta VARCHAR(30),
+nombreOferta VARCHAR(100),
 fecha_pub date,
 prioridad VARCHAR(20),
-enlace VARCHAR(50),
-descripcion VARCHAR(100),
-precio int(6)
+enlace VARCHAR(500),
+descripcion VARCHAR(500),
+precio double(6,2)
 );
