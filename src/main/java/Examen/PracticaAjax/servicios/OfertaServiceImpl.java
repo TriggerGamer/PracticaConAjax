@@ -61,7 +61,7 @@ public class OfertaServiceImpl implements OfertaServicio {
 		if(oferta.getFecha_pub() == null || oferta.getFecha_pub() == "") {
 			String f = LocalDateTime.now().toString();
 			String nuevo[] = f.split("T");
-			oferta.setFecha_pub(nuevo[0]) ;
+			oferta.setFecha_pub(nuevo[0]);
 		}
 		ofertaActualizada.setFecha_pub(oferta.getFecha_pub());
 		
