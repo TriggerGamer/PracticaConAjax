@@ -48,77 +48,89 @@ function filtrarOfertas(event) {
 		})
 }
 
-function informacionTabla(response){
+function informacionTabla(response) {
 	let resultados = document.getElementById("tablita");
 	resultados.replaceChildren();
 
-	for (let oferta of response) {
-		let tr = document.createElement('tr');
+	var numeroOfertas = 0;
+		for (let oferta of response) {
 
-		if (oferta.prioridad == "Baja") {
-			oferta.prioridad = "table-active"
+			let tr = document.createElement('tr');
+
+			if (oferta.prioridad == "Baja") {
+				oferta.prioridad = "table-active"
+			}
+			else if (oferta.prioridad == "Media") {
+				oferta.prioridad = "table-warning"
+			}
+			else if (oferta.prioridad == "Alta") {
+				oferta.prioridad = "table-danger"
+			}
+
+			tr.classList.add(oferta.prioridad);
+			let th = document.createElement('th');
+			let td1 = document.createElement('td');
+			let td2 = document.createElement('td');
+			let td3 = document.createElement('td');
+			let td4 = document.createElement('td');
+			let button1 = document.createElement('button');
+			var linkText1 = document.createTextNode("Perfil");
+			button1.setAttribute("type", "button");
+			button1.classList.add("btn", "btn-outline-info");
+			button1.setAttribute("name", "perfil");
+			button1.appendChild(linkText1);
+			let button2 = document.createElement('button');
+			var linkText2 = document.createTextNode("Borrar");
+			button2.setAttribute("type", "button");
+			button2.classList.add("btn", "btn-outline-danger");
+			button2.setAttribute("name", "borrar");
+			button2.appendChild(linkText2);
+			th.textContent = oferta.id_Oferta;
+			td1.textContent = oferta.nombreOferta;
+			td2.textContent = oferta.precio + "€";
+
+			resultados.appendChild(tr);
+			tr.appendChild(th);
+			tr.appendChild(td1);
+			tr.appendChild(td2);
+			tr.appendChild(td3);
+			td3.appendChild(button1);
+			tr.appendChild(td4);
+			td4.appendChild(button2);
+			
+			numeroOfertas++;
+			
+			if(numeroOfertas == 10){
+				break;
+			}
+			
 		}
-		else if (oferta.prioridad == "Media") {
-			oferta.prioridad = "table-warning"
+
+		var borrar = document.getElementsByName("borrar");
+		var id;
+		for (let elementos of borrar) {
+			elementos.addEventListener("click", function() {
+				var tr = elementos.closest("tr");
+				id = tr.childNodes[0].innerText;
+				borrarOfertas(id);
+			});
 		}
-		else if (oferta.prioridad == "Alta") {
-			oferta.prioridad = "table-danger"
+
+		var perfil = document.getElementsByName("perfil");
+		let tabla = document.getElementById("tablita-modal");
+		var id_perfil;
+		for (let elementos of perfil) {
+			elementos.addEventListener("click", function() {
+				var tr = elementos.closest("tr");
+				id_perfil = tr.childNodes[0].innerText;
+				tabla.replaceChildren();
+				perfilOfertas(id_perfil);
+			});
 		}
 
-		tr.classList.add(oferta.prioridad);
-		let th = document.createElement('th');
-		let td1 = document.createElement('td');
-		let td2 = document.createElement('td');
-		let td3 = document.createElement('td');
-		let td4 = document.createElement('td');
-		let button1 = document.createElement('button');
-		var linkText1 = document.createTextNode("Perfil");
-		button1.setAttribute("type", "button");
-		button1.classList.add("btn", "btn-outline-info");
-		button1.setAttribute("name", "perfil");
-		button1.appendChild(linkText1);
-		let button2 = document.createElement('button');
-		var linkText2 = document.createTextNode("Borrar");
-		button2.setAttribute("type", "button");
-		button2.classList.add("btn", "btn-outline-danger");
-		button2.setAttribute("name", "borrar");
-		button2.appendChild(linkText2);
-		th.textContent = oferta.id_Oferta;
-		td1.textContent = oferta.nombreOferta;
-		td2.textContent = oferta.precio + "€";
 
-		resultados.appendChild(tr);
-		tr.appendChild(th);
-		tr.appendChild(td1);
-		tr.appendChild(td2);
-		tr.appendChild(td3);
-		td3.appendChild(button1);
-		tr.appendChild(td4);
-		td4.appendChild(button2);
-	}
-
-	var borrar = document.getElementsByName("borrar");
-	var id;
-	for (let elementos of borrar) {
-		elementos.addEventListener("click", function() {
-			var tr = elementos.closest("tr");
-			id = tr.childNodes[0].innerText;
-			borrarOfertas(id);
-		});
-	}
-
-	var perfil = document.getElementsByName("perfil");
-	let tabla = document.getElementById("tablita-modal");
-	var id_perfil;
-	for (let elementos of perfil) {
-		elementos.addEventListener("click", function() {
-			var tr = elementos.closest("tr");
-			id_perfil = tr.childNodes[0].innerText;
-			tabla.replaceChildren();
-			perfilOfertas(id_perfil);
-		});
-	}
 }
+
 
 function anadirOfertas(event) {
 	event.preventDefault();
@@ -158,29 +170,29 @@ function borrarOfertas(id) {
 }
 
 function perfilOfertas(id) {
-	
+
 	var mymodal = document.getElementById("modal");
-	
+
 	$(mymodal).modal();
 
 	let tabla = document.getElementById("tablita-modal");
 	let bodymodal = document.getElementById("modal_body");
-	
+
 	var cerrarmodal = document.getElementById("cerrar-modal");
 	cerrarmodal.addEventListener("click", function() {
-		
+
 		let boton = document.getElementById("actualizarOferta");
-		if (boton != null){
+		if (boton != null) {
 			bodymodal.removeChild(boton);
 		}
-		
+
 		tabla.replaceChildren();
-		
+
 		$(mymodal).modal('hide');
 	})
 
 	let boton = document.getElementById("actualizarOferta");
-	if (boton != null){
+	if (boton != null) {
 		bodymodal.removeChild(boton);
 	}
 
@@ -189,7 +201,7 @@ function perfilOfertas(id) {
 		.then(response => {
 
 			tabla.replaceChildren();
-			
+
 			let tr = document.createElement('tr');
 
 			let th = document.createElement('th');
@@ -204,7 +216,7 @@ function perfilOfertas(id) {
 			td1.textContent = response.nombreOferta;
 			td2.textContent = response.fecha_pub;
 			td3.textContent = response.prioridad;
-			td4.textContent =  response.enlace;
+			td4.textContent = response.enlace;
 			td5.textContent = response.descripcion;
 			td6.textContent = response.precio + "€";
 
@@ -220,26 +232,26 @@ function perfilOfertas(id) {
 }
 
 function editarOfertas() {
-	
+
 	let tabla = document.getElementById("tablita-modal");
 	let bodymodal = document.getElementById("modal_body");
 	let boton = document.getElementById("actualizarOferta");
 	let tr = tabla.firstElementChild;
-	
-	if(boton != null){
+
+	if (boton != null) {
 		bodymodal.removeChild(boton);
 	}
-	
+
 	var id;
 	id = tr.childNodes[0].innerText;
 
 	fetch('/perfil/' + id, { headers: { "Content-Type": "application/json; charset=utf-8" } })
 		.then(res => res.json())
 		.then(response => {
-			
+
 			// Borrar todod lo que haya en la tabla por si acaso
 			tabla.replaceChildren();
-			
+
 			// Añadir a la tabla todos los inputs para volverla un form y poder editar la oferta
 			let tr = document.createElement('tr');
 			let th = document.createElement('th');
@@ -255,11 +267,11 @@ function editarOfertas() {
 			td5.setAttribute("class", "form-group");
 			let td6 = document.createElement('td');
 			td6.setAttribute("class", "form-group");
-			
+
 			th.setAttribute("id", "id_oferta");
 			th.setAttribute("scope", "row");
 			th.textContent = response.id_Oferta;
-			
+
 			let input1 = document.createElement('input');
 			input1.setAttribute("type", "text");
 			input1.setAttribute("id", "nombre");
@@ -302,7 +314,7 @@ function editarOfertas() {
 			input6.setAttribute("class", "form-control col-xs-1");
 			input6.setAttribute("step", "any");
 			input6.setAttribute("value", response.precio);
-			
+
 			tabla.appendChild(tr);
 			tr.appendChild(th);
 			tr.appendChild(td1);
@@ -320,7 +332,7 @@ function editarOfertas() {
 			td5.appendChild(input5);
 			tr.appendChild(td6);
 			td6.appendChild(input6);
-		
+
 			// Añadir boton actualiazar ofertas al modal
 			let boton = document.createElement('button');
 			boton.setAttribute("id", "actualizarOferta");
@@ -328,22 +340,22 @@ function editarOfertas() {
 			boton.setAttribute("class", "btn btn-outline-info btn-lg")
 
 			bodymodal.appendChild(boton);
-			
+
 			// Añadir evento al boton actualizar ofertas
 			var botonActualizar = document.getElementById("actualizarOferta")
-			botonActualizar.addEventListener("click", function(){
+			botonActualizar.addEventListener("click", function() {
 				actualizarOferta();
-			});	
+			});
 		})
 
 }
 
-function actualizarOferta(){
+function actualizarOferta() {
 	var id_oferta = document.getElementById("id_oferta");
 
 	fetch('/actualizarOferta', {
 		headers: { "Content-Type": "application/json; charset=utf-8" }, method: 'POST',
-		body: JSON.stringify({id_Oferta: id_oferta.textContent, nombre: $('#nombre').val(), prioridad: $('#prioridad').val(), enlace: $('#enlace').val(), descripcion: $('#descripcion').val(), precio: $('#precio').val(), fecha_pub: $('#fecha_pub').val() })
+		body: JSON.stringify({ id_Oferta: id_oferta.textContent, nombre: $('#nombre').val(), prioridad: $('#prioridad').val(), enlace: $('#enlace').val(), descripcion: $('#descripcion').val(), precio: $('#precio').val(), fecha_pub: $('#fecha_pub').val() })
 	})
 		.then(function(response) {
 			if (response.ok) {
