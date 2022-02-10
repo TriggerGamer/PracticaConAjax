@@ -3,7 +3,7 @@ function obtenerOfertas() {
 	fetch('/todos', { headers: { "Content-Type": "application/json; charset=utf-8" } })
 		.then(res => res.json())
 		.then(response => {
-			informacionTabla(response);
+			añadirInfoTabla(response);
 		})
 }
 
@@ -16,7 +16,7 @@ function buscarOfertas(event) {
 	})
 		.then(res => res.json())
 		.then(response => {
-			informacionTabla(response);
+			añadirInfoTabla(response);
 		})
 }
 
@@ -44,11 +44,11 @@ function filtrarOfertas(event) {
 	})
 		.then(res => res.json())
 		.then(response => {
-			informacionTabla(response);
+			añadirInfoTabla(response);
 		})
 }
 
-function informacionTabla(response) {
+function añadirInfoTabla(response) {
 	let resultados = document.getElementById("tablita");
 	resultados.replaceChildren();
 
@@ -101,7 +101,7 @@ function informacionTabla(response) {
 			numeroOfertas++;
 			
 			if(numeroOfertas == 10){
-				break;
+				
 			}
 			
 		}
@@ -127,10 +127,7 @@ function informacionTabla(response) {
 				perfilOfertas(id_perfil);
 			});
 		}
-
-
 }
-
 
 function anadirOfertas(event) {
 	event.preventDefault();
@@ -182,8 +179,10 @@ function perfilOfertas(id) {
 	cerrarmodal.addEventListener("click", function() {
 
 		let boton = document.getElementById("actualizarOferta");
+		let botonCancelar = document.getElementById("cancelar");
 		if (boton != null) {
 			bodymodal.removeChild(boton);
+			bodymodal.removeChild(botonCancelar);
 		}
 
 		tabla.replaceChildren();
@@ -192,8 +191,10 @@ function perfilOfertas(id) {
 	})
 
 	let boton = document.getElementById("actualizarOferta");
+	var botonCancelar = document.getElementById("cancelar");
 	if (boton != null) {
 		bodymodal.removeChild(boton);
+		bodymodal.removeChild(botonCancelar);
 	}
 
 	fetch('/perfil/' + id, { headers: { "Content-Type": "application/json; charset=utf-8" } })
@@ -236,10 +237,12 @@ function editarOfertas() {
 	let tabla = document.getElementById("tablita-modal");
 	let bodymodal = document.getElementById("modal_body");
 	let boton = document.getElementById("actualizarOferta");
+	var botonCancelar = document.getElementById("cancelar");
 	let tr = tabla.firstElementChild;
 
 	if (boton != null) {
 		bodymodal.removeChild(boton);
+		bodymodal.removeChild(botonCancelar);
 	}
 
 	var id;
@@ -337,14 +340,26 @@ function editarOfertas() {
 			let boton = document.createElement('button');
 			boton.setAttribute("id", "actualizarOferta");
 			boton.textContent = "Actualizar Oferta";
-			boton.setAttribute("class", "btn btn-outline-info btn-lg")
+			boton.setAttribute("class", "btn btn-outline-success btn-lg")
+
+			let boton2 = document.createElement('button');
+			boton2.setAttribute("id", "cancelar");
+			boton2.textContent = "Cancelar Cambios";
+			boton2.setAttribute("class", "btn btn-outline-warning btn-lg")
 
 			bodymodal.appendChild(boton);
+			bodymodal.appendChild(boton2);
 
 			// Añadir evento al boton actualizar ofertas
 			var botonActualizar = document.getElementById("actualizarOferta")
 			botonActualizar.addEventListener("click", function() {
 				actualizarOferta();
+			});
+
+			var botonCancelar = document.getElementById("cancelar")
+			botonCancelar.addEventListener("click", function() {
+				var mymodal = document.getElementById("modal");
+				$(mymodal).modal('hide');
 			});
 		})
 
