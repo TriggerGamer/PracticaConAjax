@@ -101,7 +101,7 @@ function añadirInfoTabla(response) {
 			numeroOfertas++;
 			
 			if(numeroOfertas == 10){
-				
+				break;
 			}
 			
 		}
@@ -340,7 +340,7 @@ function editarOfertas() {
 			let boton = document.createElement('button');
 			boton.setAttribute("id", "actualizarOferta");
 			boton.textContent = "Actualizar Oferta";
-			boton.setAttribute("class", "btn btn-outline-success btn-lg")
+			boton.setAttribute("class", "btn btn-outline-success btn-lg me-2")
 
 			let boton2 = document.createElement('button');
 			boton2.setAttribute("id", "cancelar");
