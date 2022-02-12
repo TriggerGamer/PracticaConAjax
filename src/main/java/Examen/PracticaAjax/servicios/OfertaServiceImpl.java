@@ -8,53 +8,58 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import Examen.PracticaAjax.entidades.Oferta;
-import Examen.PracticaAjax.modelo.OfertaDao;
+import Examen.PracticaAjax.modelo.OfertaRepository;
 
 @Service
 @Transactional
 public class OfertaServiceImpl implements OfertaServicio {
 	
 	@Autowired
-	private OfertaDao ofertadao;
+	private OfertaRepository ofertadRepository;
 
 	@Override
 	public Oferta guardarOferta(Oferta oferta) {
 		
-		return ofertadao.crear(oferta);
+		return ofertadRepository.save(oferta);
 	}
 
 	@Override
 	public List<Oferta> obtenerOfertas() {
-		return ofertadao.findAll();
+		return ofertadRepository.findAll();
 	}
 
 	@Override
 	public boolean borrarOfertaById(int id) {
-		return ofertadao.deleteById(id);
+		
+		try {
+			ofertadRepository.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
 	public List<Oferta> filtrarPorPrioridad(String prioridad) {
-		
-		return ofertadao.filtrarPorPrioridad(prioridad);
+		return ofertadRepository.findByPrioridad(prioridad);
 	}
 
 	@Override
 	public List<Oferta> buscarPorNombre(String nombre) {
-		return ofertadao.buscarPorNombre(nombre);
+		return ofertadRepository.findByName(nombre);
 	}
 
 	@Override
 	public Oferta findOfertaById(int id) {
 		
-		Oferta oferta = ofertadao.findOfertaById(id);
+		Oferta oferta = ofertadRepository.getById(id);
 		
 		return oferta;
 	}
 
 	@Override
 	public Oferta actualizarOferta(Oferta oferta) {
-		Oferta ofertaActualizada = ofertadao.findOfertaById(oferta.getId_Oferta());
+		Oferta ofertaActualizada = ofertadRepository.getById(oferta.getId_Oferta());
 		
 		ofertaActualizada.setNombreOferta(oferta.getNombreOferta());
 		
